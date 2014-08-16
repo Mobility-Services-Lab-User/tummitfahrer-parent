@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<service name="tummitfahrer" description="">
+	<parameters>
+	   <!-- Changed by Behroz - We need a string parameter instead of numeric parameter -->
+	    <!-- <numericParameter id="0" name="test" range="-100..100" />	    -->
+	   <stringParameter id="0" name="notification" readOnly="false"></stringParameter>
+	   
+	   <!-- <setParameter id="1" name="timelineEvent" readOnly="true">
+			<parameters>
+				<stringParameter id = "1" name= "type" readOnly= "true"/>
+				<numericParameter id = "2" name= "id" range= "0..100000" readOnly= "true"/>
+				<stringParameter id = "3" name= "name" readOnly= "true"/>
+				<stringParameter id = "4" name= "address" readOnly= "true"/>
+				<stringParameter id = "5" name= "url" readOnly= "true"/>
+				<stringParameter id = "6" name= "image" readOnly= "true"/>
+				<stringParameter id = "7" name= "other" readOnly= "true"/>								
+		 	</parameters>		 	
+		</setParameter> -->
+		
+	    <numericParameter id="1" name="accept" range="-100..100" />
+	      
+	</parameters>
+	
+	
+</service>

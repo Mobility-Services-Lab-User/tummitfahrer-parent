@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint default-activation="eager"
+	xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+
+	<bean id="customServiceRepository" class="de.visiom.carpc.services.tummitfahrer.CustomServiceRepository" />
+
+	<service id="serviceRepository"
+		interface="de.visiom.carpc.asb.servicemodel.ServiceRepository" ref="customServiceRepository" />
+
+	<!-- <bean id="dummyPublisher" class="de.visiom.carpc.services.tummitfahrer.DummyPublish" init-method="publishDummy" >
+		<property name="eventPublisher" ref="eventPublisher"></property>
+		<property name="serviceRegistry" ref="serviceRegistry"></property>
+	</bean> -->
+
+</blueprint>

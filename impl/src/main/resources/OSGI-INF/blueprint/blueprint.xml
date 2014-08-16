@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint default-activation="eager"
+	xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+
+    <reference id="serviceRegistry"
+        interface="de.visiom.carpc.asb.serviceregistry.ServiceRegistry" />
+
+    <reference id="eventAdmin" interface="org.osgi.service.event.EventAdmin" />
+
+    <reference id="eventPublisher" interface="de.visiom.carpc.asb.messagebus.EventPublisher" />
+    
+    <!-- Added by Behroz - To Handle PUT request - Start -->
+    <reference id="commandPublisher"
+		interface="de.visiom.carpc.asb.messagebus.CommandPublisher" />
+ 					
+	<bean id="commandListener"
+		class="de.visiom.carpc.services.tummitfahrer.ParameterChangeRequestHandler">
+		<property name="commandPublisher" ref="commandPublisher" />
+		<property name="eventPublisher" ref="eventPublisher" />
+		<property name="serviceRegistry" ref="serviceRegistry" />				
+	</bean>
+
+	<service id="commandHandler" interface="org.osgi.service.event.EventHandler"
+		ref="commandListener">
+		<service-properties>
+			<entry key="event.topics" value="visiom/commands/requests" />
+			<entry key="event.filter" value="(|(serviceName=can)(serviceName=tummitfahrer))" />
+		</service-properties>
+	</service>
+
+	<!-- Added by Behroz - To Handle PUT request - End -->
+
+	<!-- Change by Behroz - Changed the id of the bean -->
+	<!-- <bean id="helloWorld" -->
+	<bean id="notificationUpdatePublisher"
+	class="de.visiom.carpc.services.tummitfahrer.ParameterUpdatePublisher"
+	init-method="start">
+	   <property name="eventPublisher" ref="eventPublisher" />
+	   <property name="serviceRegistry" ref="serviceRegistry" />
+	</bean>
+	
+	<!-- Changed by Behroz- Changed the name of the handler from testUpdateHandler to notificationUpdateHandler -->
+    <bean id="notificationUpdateHandler" class="de.visiom.carpc.services.tummitfahrer.ParameterUpdateHandler" />
+
+    <service id="updateHandler" interface="org.osgi.service.event.EventHandler"
+        ref="notificationUpdateHandler">
+        <service-properties>
+            <entry key="event.topics" value="visiom/updates/tummitfahrer" />
+            <!-- Changed by Behroz -->
+            <!-- <entry key="event.filter" value="(parameterName=test)" /> -->
+            <entry key="event.filter" value="(parameterName=notification)" />
+        </service-properties>
+    </service>
+    
+</blueprint>

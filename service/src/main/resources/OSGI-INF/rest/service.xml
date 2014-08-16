@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<service path="tummitfahrer" name="tummitfahrer" ranking="10">
+	<parameters>
+	   <!-- Changed by Behroz - we need string parameter instead of numeric parameter -->
+	   <!-- <restNumericParameter path="test" referenceParameter="0" name="test" /> -->
+	   <restStringParameter path="notification" referenceParameter="0" name="notification"></restStringParameter>
+	   	   
+	   <restNumericParameter path="accept" referenceParameter="1" name="accept" />
+	</parameters>
+</service>
+
