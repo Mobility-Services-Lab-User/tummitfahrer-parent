@@ -29,7 +29,7 @@
 
 	<properties>
 		 <!-- <asb.version>2.0.1</asb.version> -->
-		<asb.version>2.1.2</asb.version>		
+		<asb.version>2.1.3</asb.version>		
 	</properties>
 
 	<dependencyManagement>

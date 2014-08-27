@@ -34,6 +34,8 @@ import de.visiom.carpc.asb.servicemodel.valueobjects.ValueObject;
 import de.visiom.carpc.asb.serviceregistry.ServiceRegistry;
 import de.visiom.carpc.asb.serviceregistry.exceptions.NoSuchServiceException;
 import de.visiom.carpc.services.tummitfahrer.notification.GetNotification;
+import de.visiom.carpc.services.tummitfahrer.notification.HttpRequest;
+import de.visiom.carpc.services.tummitfahrer.notification.UrlStore;
 
 public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 
@@ -73,24 +75,18 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 		
 		if(parameter.getService().getName().equals(readConfigFile("acceptParameterServiceName"))
 						&& parameter.getName().equals(readConfigFile("numericAcceptParameterName")))			
-		{
-			
-			GetNotification notification = new GetNotification();
-			try {
-				String response = notification.sendPUT("http://localhost:3000/api/v2/rides/67/requests/18?passenger_id=2", "1"); //TODO: 1 = dummy value remove it
-				LOG.info("Response successfully sent:" + response);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				LOG.info("Error occured while sending the PUT request", e);
-			}
-			
-			LOG.info("Publishing accept parameter");
-			result = publishNumericParameterChangeEvent(request);			
+		{			
+			result = handleAccept(request);
+		}
+		else if(parameter.getService().getName().equals(readConfigFile("declineParameterServiceName"))
+						&& parameter.getName().equals(readConfigFile("numericDeclineParameterName")))			
+		{			
+			result = handleDecline(request);
 		}
 		else
-		{		
-			//boolean result = publishSetParameterChangeEvent(request);
+		{	
 			result = publishStringParameterChangeEvent(request);
+			//result = publishSetParameterChangeEvent(request);
 		}
 		
 		int responseStatus = getResponseStatus(result);
@@ -102,6 +98,31 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
                 .getParameter().getService());   
 	}
 	
+	private boolean handleAccept(ValueChangeRequest request)
+	{
+		HttpRequest putRequest = new HttpRequest();
+		try {
+			//TODO: Parse the request to get the ID, Parse the ID to get your own ID i.e 04. Post response.
+			String response = putRequest.sendPUTRequest("http://localhost:3000/api/v2/rides/67/requests/18?passenger_id=2", "1"); //TODO: 1 = dummy value remove it
+			LOG.info("Response successfully sent:" + response);
+		} catch (Exception e) {				
+			LOG.info("Error occured while sending the PUT request", e);
+		}
+		
+		LOG.info("Publishing accept parameter");
+		return publishNumericParameterChangeEvent(request);		
+	}
+	
+	private boolean handleDecline(ValueChangeRequest request)
+	{
+		//TODO: Handle this
+		return true;
+	}
+	
+	
+	
+	
+	
 	private int getResponseStatus(boolean wasSuccessfull) {
         if (wasSuccessfull) {
             return GenericResponse.STATUS_OK;
@@ -109,6 +130,50 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
             return GenericResponse.STATUS_ERROR;
         }
     }
+	
+	/**
+	 * This function reads the configuration file and returns the value against the key propertyName
+	 * @param propertyName The property whose value needs to be returned
+	 * @return The value found in the config.properties file
+	 */
+	private String readConfigFile(String propertyName)
+	{
+		Properties prop = new Properties();
+		InputStream input = null;
+	 
+		try {
+			
+			String filename = "/config.properties";
+			input = ParameterChangeRequestHandler.class.getClassLoader().getResourceAsStream(filename); //reads from the resource folder
+			
+    		if(input==null){
+    			LOG.info("Sorry, unable to find " + filename);
+    		    return "";
+    		}
+	  
+			// load a properties file
+			prop.load(input);
+	 
+			// get the property value and print it out
+			return prop.getProperty(propertyName);			
+	 
+		} catch (IOException e) {
+			e.printStackTrace();
+			LOG.info("Unable to find the service!", e);
+		} finally {
+			if (input != null) {
+				try {
+					input.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return "";		
+	}
+	
+	
 
 	/* This function publishes a change event on the bus. First it looks for the service and its parameter and then
 	 * it pushes the event on this bus. 
@@ -141,6 +206,89 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 			LOG.info("Unable to find the parameter!", e);
 			return false;
 		}
+	}
+		
+	/* This function publishes a change event on the bus. First it looks for the service and its parameter and then
+	 * it pushes the event on this bus. 
+	 * @param request It is the Change request. This change request was posted from the TUMitfahrer server using the
+	 * PUT command.
+	 * @return true = if event was published without errors. false = some exception was raised while accessing the service.
+	 */
+	private boolean publishStringParameterChangeEvent(ValueChangeRequest request)	
+	{	
+		Service tummitfahrerService;
+		try {
+			//TODO: Put the service name in some configuration file.
+			tummitfahrerService = serviceRegistry.getService(readConfigFile("stringParameterServiceName"));
+		
+			notificationParamter = (StringParameter) tummitfahrerService.getParameter(readConfigFile("stringParameterName"));			
+			
+	        ValueObject valueObject = StringValueObject.valueOf(request.getValue());
+	        ValueChangeEvent valueChangeEvent = ValueChangeEvent
+	                .createValueChangeEvent(notificationParamter, valueObject);
+	        eventPublisher.publishValueChange(valueChangeEvent);
+	        
+	        return true;
+        
+		} catch (NoSuchServiceException e) {			
+			LOG.info("Unable to find the service!", e);
+			return false;
+		}
+		catch(NoSuchParameterException e)
+		{
+			LOG.info("Unable to find the parameter!", e);
+			return false;
+		}
+	}
+		
+	/* This function publishes a change event on the bus. First it looks for the service and its parameter and then
+	 * it pushes the event on this bus. 
+	 * @param request It is the Change request. This change request was posted from the TUMitfahrer server using the
+	 * PUT command.
+	 * @return true = if event was published without errors. false = some exception was raised while accessing the service.
+	 */
+	private boolean publishNumericParameterChangeEvent(ValueChangeRequest request)	
+	{	
+		Service tummitfahrerService;
+		try {
+			//TODO: Put the service name in some configuration file.
+			tummitfahrerService = serviceRegistry.getService(readConfigFile("acceptParameterServiceName"));
+		
+			acceptParamter = (NumericParameter) tummitfahrerService.getParameter(readConfigFile("numericAcceptParameterName"));			
+			
+	        ValueObject valueObject = NumberValueObject.valueOf(Integer.parseInt(request.getValue().toString()));
+	        ValueChangeEvent valueChangeEvent = ValueChangeEvent
+	                .createValueChangeEvent(acceptParamter, valueObject);
+	        eventPublisher.publishValueChange(valueChangeEvent);
+	        
+	        return true;
+        
+		} catch (NoSuchServiceException e) {			
+			LOG.info("Unable to find the service!", e);
+			return false;
+		}
+		catch(NoSuchParameterException e)
+		{
+			LOG.info("Unable to find the parameter!", e);
+			return false;
+		}
+	}
+
+	
+	
+
+	private boolean fakeHandleAcceptRequest(ValueChangeRequest request)
+	{
+		HttpRequest putRequest = new HttpRequest();
+		try {
+			String response = putRequest.sendPUTRequest("http://localhost:3000/api/v2/rides/67/requests/18?passenger_id=2", "1"); //TODO: 1 = dummy value remove it
+			LOG.info("Response successfully sent:" + response);
+		} catch (Exception e) {				
+			LOG.info("Error occured while sending the PUT request", e);
+		}
+		
+		LOG.info("Publishing accept parameter");
+		return publishNumericParameterChangeEvent(request);	
 	}
 	
 	/**
@@ -181,117 +329,5 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 		
 		
 		return SetValueObject.valueOf(map);			
-	}
-	
-	
-	/* This function publishes a change event on the bus. First it looks for the service and its parameter and then
-	 * it pushes the event on this bus. 
-	 * @param request It is the Change request. This change request was posted from the TUMitfahrer server using the
-	 * PUT command.
-	 * @return true = if event was published without errors. false = some exception was raised while accessing the service.
-	 */
-	private boolean publishStringParameterChangeEvent(ValueChangeRequest request)	
-	{	
-		Service tummitfahrerService;
-		try {
-			//TODO: Put the service name in some configuration file.
-			tummitfahrerService = serviceRegistry.getService(readConfigFile("stringParameterServiceName"));
-		
-			notificationParamter = (StringParameter) tummitfahrerService.getParameter(readConfigFile("stringParameterName"));			
-			
-	        ValueObject valueObject = StringValueObject.valueOf(request.getValue());
-	        ValueChangeEvent valueChangeEvent = ValueChangeEvent
-	                .createValueChangeEvent(notificationParamter, valueObject);
-	        eventPublisher.publishValueChange(valueChangeEvent);
-	        
-	        return true;
-        
-		} catch (NoSuchServiceException e) {			
-			LOG.info("Unable to find the service!", e);
-			return false;
-		}
-		catch(NoSuchParameterException e)
-		{
-			LOG.info("Unable to find the parameter!", e);
-			return false;
-		}
-	}
-	
-	
-	/* This function publishes a change event on the bus. First it looks for the service and its parameter and then
-	 * it pushes the event on this bus. 
-	 * @param request It is the Change request. This change request was posted from the TUMitfahrer server using the
-	 * PUT command.
-	 * @return true = if event was published without errors. false = some exception was raised while accessing the service.
-	 */
-	private boolean publishNumericParameterChangeEvent(ValueChangeRequest request)	
-	{	
-		Service tummitfahrerService;
-		try {
-			//TODO: Put the service name in some configuration file.
-			tummitfahrerService = serviceRegistry.getService(readConfigFile("acceptParameterServiceName"));
-		
-			acceptParamter = (NumericParameter) tummitfahrerService.getParameter(readConfigFile("numericAcceptParameterName"));			
-			
-	        ValueObject valueObject = NumberValueObject.valueOf(Integer.parseInt(request.getValue().toString()));
-	        ValueChangeEvent valueChangeEvent = ValueChangeEvent
-	                .createValueChangeEvent(acceptParamter, valueObject);
-	        eventPublisher.publishValueChange(valueChangeEvent);
-	        
-	        return true;
-        
-		} catch (NoSuchServiceException e) {			
-			LOG.info("Unable to find the service!", e);
-			return false;
-		}
-		catch(NoSuchParameterException e)
-		{
-			LOG.info("Unable to find the parameter!", e);
-			return false;
-		}
-	}
-
-	/**
-	 * This function reads the configuration file and returns the value against the key propertyName
-	 * @param propertyName The property whose value needs to be returned
-	 * @return The value found in the config.properties file
-	 */
-	private String readConfigFile(String propertyName)
-	{
-		Properties prop = new Properties();
-		InputStream input = null;
-	 
-		try {
-			
-			String filename = "/config.properties";
-			input = ParameterChangeRequestHandler.class.getClassLoader().getResourceAsStream(filename); //reads from the resource folder
-			
-    		if(input==null){
-    			LOG.info("Sorry, unable to find " + filename);
-    		    return "";
-    		}
-	 
-			//input = new FileInputStream("config.properties");
-	 
-			// load a properties file
-			prop.load(input);
-	 
-			// get the property value and print it out
-			return prop.getProperty(propertyName);			
-	 
-		} catch (IOException e) {
-			e.printStackTrace();
-			LOG.info("Unable to find the service!", e);
-		} finally {
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		
-		return "";		
 	}
 }
