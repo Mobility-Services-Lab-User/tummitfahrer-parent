@@ -90,7 +90,8 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 		else
 		{		
 			//boolean result = publishSetParameterChangeEvent(request);
-			result = publishStringParameterChangeEvent(request);
+			//result = publishStringParameterChangeEvent(request);
+			result = publishSetParameterChangeEvent(request);
 		}
 		
 		int responseStatus = getResponseStatus(result);
@@ -129,6 +130,8 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 	        ValueChangeEvent valueChangeEvent = ValueChangeEvent
 	                .createValueChangeEvent(timelineSetParamter, valueObject);
 	        eventPublisher.publishValueChange(valueChangeEvent);
+	        
+	        LOG.info("Set Parameter Published!");
 	        
 	        return true;
         

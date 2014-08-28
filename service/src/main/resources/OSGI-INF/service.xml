@@ -5,7 +5,7 @@
 	    <!-- <numericParameter id="0" name="test" range="-100..100" />	    -->
 	   <stringParameter id="0" name="notification" readOnly="false"></stringParameter>
 	   
-	   <!-- <setParameter id="1" name="timelineEvent" readOnly="true">
+	   <setParameter id="2" name="timelineEvent" readOnly="true">
 			<parameters>
 				<stringParameter id = "1" name= "type" readOnly= "true"/>
 				<numericParameter id = "2" name= "id" range= "0..100000" readOnly= "true"/>
@@ -15,7 +15,7 @@
 				<stringParameter id = "6" name= "image" readOnly= "true"/>
 				<stringParameter id = "7" name= "other" readOnly= "true"/>								
 		 	</parameters>		 	
-		</setParameter> -->
+		</setParameter>
 		
 	    <numericParameter id="1" name="accept" range="-100..100" />
 	      
