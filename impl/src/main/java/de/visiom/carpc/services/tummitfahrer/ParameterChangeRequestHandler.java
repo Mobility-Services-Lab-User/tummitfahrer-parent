@@ -50,7 +50,7 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 	private ServiceRegistry serviceRegistry;
     private EventPublisher eventPublisher;
 	
-	private CommandPublisher commandPublisher;
+	private CommandPublisher commandPublisher; 
 	 
 	public void setCommandPublisher(CommandPublisher commandPublisher) {
         this.commandPublisher = commandPublisher;
@@ -85,8 +85,8 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 		}
 		else
 		{	
-			result = publishStringParameterChangeEvent(request);
-			//result = publishSetParameterChangeEvent(request);
+			//result = publishStringParameterChangeEvent(request);
+			result = publishSetParameterChangeEvent(request);
 		}
 		
 		int responseStatus = getResponseStatus(result);
