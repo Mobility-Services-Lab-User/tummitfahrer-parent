@@ -3,20 +3,27 @@
 	<parameters>
 	   <!-- Changed by Behroz - We need a string parameter instead of numeric parameter -->
 	    <!-- <numericParameter id="0" name="test" range="-100..100" />	    -->
-	   <stringParameter id="0" name="notification" readOnly="false"></stringParameter>
+	   <!-- <stringParameter id="0" name="notification" readOnly="false"></stringParameter> -->
 	   
-	   <!-- <setParameter id="2" name="timelineEvent" readOnly="true">
+	   <setParameter id="0" name="timelineEvent">
 			<parameters>
 				<stringParameter id = "1" name= "type" readOnly= "true"/>
-				<numericParameter id = "2" name= "id" range= "0..100000" readOnly= "true"/>
+				<numericParameter id = "2" name= "id" range= "0..100000"/>
 				<stringParameter id = "3" name= "name" readOnly= "true"/>
 				<stringParameter id = "4" name= "address" readOnly= "true"/>
-				<stringParameter id = "5" name= "url" readOnly= "true"/>
-				<stringParameter id = "6" name= "image" readOnly= "true"/>
-				<stringParameter id = "7" name= "other" readOnly= "true"/>								
+				<!-- <stringParameter id = "5" name= "url" readOnly= "true"/> -->
+				<stringParameter id = "5" name= "image" readOnly= "true"/>
+				<!-- <stringParameter id = "7" name= "other" readOnly= "true"/> -->
+				<!-- <stateParameter id = "6" name= "state" readOnly= "true">
+					<states>
+						<state>Accept</state>
+						<state>Decline</state>
+					</states>
+				</stateParameter> -->								
 		 	</parameters>		 	
-		</setParameter> -->
+		</setParameter>
 		
+		<!-- TODO:JUST FOR TESTING ACCEPT. REMOVE ONCE WE HAVE REAL ACCEPT/DECLINE -->
 	    <numericParameter id="1" name="accept" range="-100..100" />
 	      
 	</parameters>

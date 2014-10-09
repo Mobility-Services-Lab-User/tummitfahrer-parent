@@ -9,6 +9,9 @@
 
     <reference id="eventPublisher" interface="de.visiom.carpc.asb.messagebus.EventPublisher" />
     
+    <reference id="parameterValueRegistry"
+		interface="de.visiom.carpc.asb.parametervalueregistry.ParameterValueRegistry" />
+    
     <!-- Added by Behroz - To Handle PUT request - Start -->
     <reference id="commandPublisher"
 		interface="de.visiom.carpc.asb.messagebus.CommandPublisher" />
@@ -37,6 +40,7 @@
 	init-method="start">
 	   <property name="eventPublisher" ref="eventPublisher" />
 	   <property name="serviceRegistry" ref="serviceRegistry" />
+	   <property name="parameterValueRegistry" ref="parameterValueRegistry" />
 	</bean>
 	
 	<!-- Changed by Behroz- Changed the name of the handler from testUpdateHandler to notificationUpdateHandler -->
@@ -48,7 +52,9 @@
             <entry key="event.topics" value="visiom/updates/tummitfahrer" />
             <!-- Changed by Behroz -->
             <!-- <entry key="event.filter" value="(parameterName=test)" /> -->
+            <!-- TODO: Change filteration if required -->
             <entry key="event.filter" value="(parameterName=notification)" />
+            <!-- <entry key="event.filter" value="(parameterName=timelineEvent)" /> -->            
         </service-properties>
     </service>
     

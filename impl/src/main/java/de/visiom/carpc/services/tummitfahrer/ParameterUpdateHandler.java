@@ -12,6 +12,7 @@ import de.visiom.carpc.asb.servicemodel.valueobjects.SetValueObject;
 import de.visiom.carpc.asb.servicemodel.valueobjects.StringValueObject;
 import de.visiom.carpc.asb.servicemodel.valueobjects.ValueObject;
 import de.visiom.carpc.asb.servicemodel.parameters.Parameter;
+import de.visiom.carpc.services.tummitfahrer.notification.UrlStore;
 
 public class ParameterUpdateHandler extends ValueChangeEventHandler {
 
@@ -35,6 +36,8 @@ public class ParameterUpdateHandler extends ValueChangeEventHandler {
         String value = stringValueObject.getValue();
         LOG.info("Received an update for {}/{}: {}", parameter.getName(), 
                 parameter.getService().getName(), value);
+        
+        //LOG.info("~~URL in store is ~~ {}",UrlStore.getURL(104));
     	
     	/*SetValueObject stringValueObject = (SetValueObject) valueChangeEvent.getValue();
         Parameter parameter = valueChangeEvent.getParameter();

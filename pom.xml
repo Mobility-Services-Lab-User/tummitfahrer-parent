@@ -28,8 +28,8 @@
 	<name>service-component</name>
 
 	<properties>
-		 <!-- <asb.version>2.0.1</asb.version> -->
-		<asb.version>2.1.3</asb.version>		
+		<!-- <asb.version>2.0.1</asb.version> -->
+		<asb.version>2.1.5</asb.version>		
 	</properties>
 
 	<dependencyManagement>
