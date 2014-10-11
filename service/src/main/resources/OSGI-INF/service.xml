@@ -5,7 +5,27 @@
 	    <!-- <numericParameter id="0" name="test" range="-100..100" />	    -->
 	   <!-- <stringParameter id="0" name="notification" readOnly="false"></stringParameter> -->
 	   
-	   <setParameter id="0" name="timelineEvent">
+	   <setParameter id="0" name="timelineEventData">
+			<parameters>
+				<stringParameter id = "1" name= "type" readOnly= "true"/>
+				<numericParameter id = "2" name= "id" range= "0..100000"/>
+				<stringParameter id = "3" name= "name" readOnly= "true"/>
+				<stringParameter id = "4" name= "address" readOnly= "true"/>				
+				<stringParameter id = "5" name= "image" readOnly= "true"/>
+				<stringParameter id = "6" name= "url" readOnly= "true"/>
+				<stringParameter id = "7" name= "latt" readOnly= "true"/>
+				<stringParameter id = "8" name= "long" readOnly= "true"/>
+				<!-- <numericParameter id = "024" name= "waypointLatitude" range= "0..1000" readOnly= "false"/>
+				<numericParameter id = "025" name= "waypointLongitude" range= "0..1000" readOnly= "false"/> -->																
+		 	</parameters>		 	
+		</setParameter>
+		
+		<!-- TODO:JUST FOR TESTING ACCEPT. REMOVE ONCE WE HAVE REAL ACCEPT/DECLINE -->
+	    <numericParameter id="1" name="accept" range="-100..100" />
+	    
+	    <!-- <numericParameter id="2" name="test" range="-100..100" /> -->
+	    
+	    <setParameter id="2" name="timelineEvent">
 			<parameters>
 				<stringParameter id = "1" name= "type" readOnly= "true"/>
 				<numericParameter id = "2" name= "id" range= "0..100000"/>
@@ -22,9 +42,6 @@
 				</stateParameter> -->								
 		 	</parameters>		 	
 		</setParameter>
-		
-		<!-- TODO:JUST FOR TESTING ACCEPT. REMOVE ONCE WE HAVE REAL ACCEPT/DECLINE -->
-	    <numericParameter id="1" name="accept" range="-100..100" />
 	      
 	</parameters>
 	

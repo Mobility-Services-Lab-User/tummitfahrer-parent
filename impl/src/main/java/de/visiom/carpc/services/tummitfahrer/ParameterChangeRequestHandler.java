@@ -56,6 +56,7 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 	private NumericParameter acceptParamter;
 	private StringParameter notificationParamter;
 	private SetParameter timelineSetParamter;
+	private SetParameter timelineDataSetParamter;
 	private ServiceRegistry serviceRegistry;
     private EventPublisher eventPublisher;
 	
@@ -155,31 +156,48 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 		try {			
 			tummitfahrerService = serviceRegistry.getService(Utilities.readConfigFile("setParameterServiceName"));
 		
-			timelineSetParamter = (SetParameter) tummitfahrerService.getParameter(Utilities.readConfigFile("setParameterName"));			
+			timelineDataSetParamter = (SetParameter) tummitfahrerService.getParameter(Utilities.readConfigFile("timelineDataSetParameterName"));
+			
+			timelineSetParamter = (SetParameter) tummitfahrerService.getParameter(Utilities.readConfigFile("timelineSetParameterName"));
 		
+			//Get TIMELINEEVENT parameters
 			Parameter typeParam = timelineSetParamter.getParameter("type");
 			Parameter idParam = timelineSetParamter.getParameter("id");
 			Parameter nameParam = timelineSetParamter.getParameter("name");
 			Parameter addressParam = timelineSetParamter.getParameter("address");
 			Parameter imageParam = timelineSetParamter.getParameter("image");
 			
-			//Get values from the request
+			//Get TIMELINEEVENTDATA parameters
+			Parameter typeParamData = timelineDataSetParamter.getParameter("type");
+			Parameter idParamData = timelineDataSetParamter.getParameter("id");
+			Parameter nameParamData = timelineDataSetParamter.getParameter("name");
+			Parameter addressParamData = timelineDataSetParamter.getParameter("address");
+			Parameter imageParamData = timelineDataSetParamter.getParameter("image");
+			Parameter urlParamData = timelineDataSetParamter.getParameter("url");
+			Parameter lattParamData = timelineDataSetParamter.getParameter("latt");
+			Parameter longParamData = timelineDataSetParamter.getParameter("long");
+			
+			//Get values from the request using TIMELINEEVENTDATA
 			SetValueObject receivedRequest = (SetValueObject)request.getValue();
 			Map<Parameter, ValueObject> requestValue = receivedRequest.getValue();
 			
-			StringValueObject typeValueObj = (StringValueObject) requestValue.get(typeParam);
-			NumberValueObject idValueObj = (NumberValueObject) requestValue.get(idParam);
-			StringValueObject nameValueObj = (StringValueObject) requestValue.get(nameParam);
-			StringValueObject addressValueObj = (StringValueObject) requestValue.get(addressParam);
-			StringValueObject imageValueObj = (StringValueObject) requestValue.get(imageParam);
+			StringValueObject typeValueObj = (StringValueObject) requestValue.get(typeParamData);
+			NumberValueObject idValueObj = (NumberValueObject) requestValue.get(idParamData);
+			StringValueObject nameValueObj = (StringValueObject) requestValue.get(nameParamData);
+			StringValueObject addressValueObj = (StringValueObject) requestValue.get(addressParamData);
+			StringValueObject imageValueObj = (StringValueObject) requestValue.get(imageParamData);
+			StringValueObject urlValueObj = (StringValueObject) requestValue.get(urlParamData);
+			StringValueObject lattValueObj = (StringValueObject) requestValue.get(lattParamData);
+			StringValueObject longValueObj = (StringValueObject) requestValue.get(longParamData);
 			
 			//Add the service number to the id
 			int notificationID = Utilities.addServiceNumberToID(idValueObj.getValue().intValue());
 			
 			//TODO: Fix the URL. ASk David whether I can declare a new parameter named URL in the rest service.xml
 			//Save the notificationId and url in the memory. Will be used later on when Accept/Decline will be called
-			UrlStore.saveUrl(notificationID, Utilities.getCompleteTUMitfahrerServerURL("/url/test/123"));
+			UrlStore.saveData(notificationID, Utilities.getCompleteTUMitfahrerServerURL(urlValueObj.getValue()), lattValueObj.getValue(),longValueObj.getValue());
 			
+			//CREATE A TIMELINEEVENT Map object
 			//Do the modifications to the input
 			Map<Parameter, ValueObject> updates = new HashMap<Parameter, ValueObject>();
 			updates.put(typeParam, typeValueObj);
@@ -187,6 +205,7 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 			updates.put(nameParam, nameValueObj);
 			updates.put(addressParam, addressValueObj);
 			updates.put(imageParam, imageValueObj);
+			
 			
 			//Publish the result to bus
 			ValueObject valueObject = SetValueObject.valueOf(updates);
@@ -329,7 +348,7 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 		StringValueObject nameObj = StringValueObject.valueOf("Driver Pickup Alert");
 		StringValueObject addressObj = StringValueObject.valueOf("address");
 		
-		UrlStore.saveUrl(notificationId, "url/test/123"); //Save URL
+		//UrlStore.saveUrl(notificationId, "url/test/123"); //Save URL
 		
 		/*StringValueObject urlObj = StringValueObject.valueOf("");*/
 		StringValueObject imageObj = StringValueObject.valueOf("image");

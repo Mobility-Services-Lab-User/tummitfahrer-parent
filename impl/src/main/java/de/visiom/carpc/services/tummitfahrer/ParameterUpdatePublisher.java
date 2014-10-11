@@ -69,8 +69,12 @@ public class ParameterUpdatePublisher extends ParallelWorker {
         /*Changed by Behroz - Changed the name of the parameter from test to notification*/
         //testParameter = (NumericParameter) tummitfahrerService.getParameter("test");
         //notificationParamter = (StringParameter) tummitfahrerService.getParameter("notification");
-        notificationParamter = (SetParameter) tummitfahrerService.getParameter(Utilities.readConfigFile("setParameterName"));
+        notificationParamter = (SetParameter) tummitfahrerService.getParameter(Utilities.readConfigFile("timelineDataSetParameterName"));
         
+        /*NumericParameter numberParamter = (NumericParameter) tummitfahrerService.getParameter("test");
+        LOG.info("\nNumber Parameter => {}",numberParamter.getName());*/
+        //numberParamter
+        //LOG.info("\n Parameter Size: => {}", numberParamter. );
         //resetCurrentValue();
     }
 
@@ -113,15 +117,21 @@ public class ParameterUpdatePublisher extends ParallelWorker {
 			Parameter param2 = parameters.get(2);
 			Parameter param3 = parameters.get(3);
 			Parameter param4 = parameters.get(4);
+			Parameter param5 = parameters.get(5);
+			Parameter param6 = parameters.get(6);
+			Parameter param7 = parameters.get(7);
 			/*Parameter param5 = parameters.get(5);*/
 			
-			//LOG.info("\n Parameter Size: => {}", parameters.size());
+			//LOG.info("\n Parameter Size: => {}", parameters.size());/
 			
 			newValues.put(param0, StringValueObject.valueOf("Driver Pickup Alert"));
 			newValues.put(param1, NumberValueObject.valueOf(5));
 			newValues.put(param2, StringValueObject.valueOf("Name"));
 			newValues.put(param3, StringValueObject.valueOf("Address"));
 			newValues.put(param4, StringValueObject.valueOf("Image URL"));
+			newValues.put(param5, StringValueObject.valueOf("callback URL"));
+			newValues.put(param6, StringValueObject.valueOf("latt"));
+			newValues.put(param7, StringValueObject.valueOf("long"));
 			/*newValues.put(param5, StateValueObject.valueOf("State"));*/
 					
 			
