@@ -38,6 +38,8 @@ public class ParameterUpdatePublisher extends ParallelWorker {
     //private NumericParameter testParameter;
 	//private StringParameter notificationParamter;
 	private SetParameter notificationParamter;
+	private SetParameter acceptParamter;
+	private SetParameter declineParamter;
 
     private EventPublisher eventPublisher;
 
@@ -63,6 +65,7 @@ public class ParameterUpdatePublisher extends ParallelWorker {
     @Override
     public void initialize() throws NoSuchParameterException,
             NoSuchServiceException, UninitalizedValueException {
+    	setMaximumNumberOfExecutions(0);
         //Service tummitfahrerService = serviceRegistry.getService("tummitfahrer");
     	Service tummitfahrerService = serviceRegistry.getService(Utilities.readConfigFile("setParameterServiceName"));
         
@@ -70,6 +73,8 @@ public class ParameterUpdatePublisher extends ParallelWorker {
         //testParameter = (NumericParameter) tummitfahrerService.getParameter("test");
         //notificationParamter = (StringParameter) tummitfahrerService.getParameter("notification");
         notificationParamter = (SetParameter) tummitfahrerService.getParameter(Utilities.readConfigFile("timelineDataSetParameterName"));
+        acceptParamter = (SetParameter) tummitfahrerService.getParameter(Utilities.readConfigFile("setAcceptParameterName"));
+        declineParamter = (SetParameter) tummitfahrerService.getParameter(Utilities.readConfigFile("setDeclineParameterName"));
         
         /*NumericParameter numberParamter = (NumericParameter) tummitfahrerService.getParameter("test");
         LOG.info("\nNumber Parameter => {}",numberParamter.getName());*/
@@ -139,10 +144,38 @@ public class ParameterUpdatePublisher extends ParallelWorker {
 			ValueChangeEvent valueChangeEvent = ValueChangeEvent
 					.createValueChangeEvent(notificationParamter, newValueObject);
 			eventPublisher.publishValueChange(valueChangeEvent);
+			
+			
+			//TODO: Remove them once we have integrated everything
+			initializeParameters(acceptParamter);
+			initializeParameters(declineParamter);
     	/*} 
     	catch (UninitalizedValueException e) {
     		e.printStackTrace();
     	}*/
+    }
+    
+    private void initializeParameters(SetParameter param)
+    {
+    	List<Parameter> parameters = param.getParameters();
+		Map<Parameter, ValueObject> newValues = new HashMap<Parameter, ValueObject>();
+		Parameter param0 = parameters.get(0);
+		Parameter param1 = parameters.get(1);
+		Parameter param2 = parameters.get(2);
+		Parameter param3 = parameters.get(3);
+		Parameter param4 = parameters.get(4);
+		
+		
+		newValues.put(param0, StringValueObject.valueOf(""));
+		newValues.put(param1, NumberValueObject.valueOf(0));
+		newValues.put(param2, StringValueObject.valueOf(""));
+		newValues.put(param3, StringValueObject.valueOf(""));
+		newValues.put(param4, StringValueObject.valueOf(""));
+		
+		ValueObject newValueObject = SetValueObject.valueOf(newValues);
+		ValueChangeEvent valueChangeEvent = ValueChangeEvent
+				.createValueChangeEvent(param, newValueObject);
+		eventPublisher.publishValueChange(valueChangeEvent);
     }
 
     }

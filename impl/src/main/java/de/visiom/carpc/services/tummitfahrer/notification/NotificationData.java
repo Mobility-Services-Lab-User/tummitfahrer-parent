@@ -1,9 +1,9 @@
 package de.visiom.carpc.services.tummitfahrer.notification;
 
 public class NotificationData {
-	String lattitude;
-	String longitude;
-	String callbackURL;
+	public String lattitude;
+	public String longitude;
+	public String callbackURL;
 	
 	public NotificationData(String lat, String lon, String url )
 	{

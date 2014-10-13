@@ -25,7 +25,8 @@
 		 	</parameters>		 	
 		</restSetParameter> -->
 	   	   
-	   <restNumericParameter path="accept" referenceParameter="1" name="accept" />
+	   <restSetParameter path="accept" referenceParameter="1" name="accept" />
+	   <restSetParameter path="decline" referenceParameter="3" name="decline" />
 	   
 	   <!-- <restNumericParameter path="test" referenceParameter="2" name="test" /> -->
 	</parameters>
