@@ -11,8 +11,7 @@
     
     <reference id="parameterValueRegistry"
 		interface="de.visiom.carpc.asb.parametervalueregistry.ParameterValueRegistry" />
-    
-    <!-- Added by Behroz - To Handle PUT request - Start -->
+
     <reference id="commandPublisher"
 		interface="de.visiom.carpc.asb.messagebus.CommandPublisher" />
  					
@@ -30,11 +29,7 @@
 			<entry key="event.filter" value="(|(serviceName=can)(serviceName=tummitfahrer))" />
 		</service-properties>
 	</service>
-
-	<!-- Added by Behroz - To Handle PUT request - End -->
-
-	<!-- Change by Behroz - Changed the id of the bean -->
-	<!-- <bean id="helloWorld" -->
+	
 	<bean id="notificationUpdatePublisher"
 	class="de.visiom.carpc.services.tummitfahrer.ParameterUpdatePublisher"
 	init-method="start">
@@ -43,8 +38,6 @@
 	   <property name="parameterValueRegistry" ref="parameterValueRegistry" />
 	</bean>
 	
-	<!-- Changed by Behroz- Changed the name of the handler from testUpdateHandler to notificationUpdateHandler -->
-    <!-- <bean id="notificationUpdateHandler" class="de.visiom.carpc.services.tummitfahrer.ParameterUpdateHandler" /> -->
 	<bean id="notificationUpdateHandler" class="de.visiom.carpc.services.tummitfahrer.ParameterUpdateHandler" >
 		<property name="eventPublisher" ref="eventPublisher" />
 		<property name="serviceRegistry" ref="serviceRegistry" />

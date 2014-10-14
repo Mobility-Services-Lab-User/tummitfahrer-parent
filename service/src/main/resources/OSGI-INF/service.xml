@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <service name="tummitfahrer" description="">
 	<parameters>
-	   <!-- Changed by Behroz - We need a string parameter instead of numeric parameter -->
-	    <!-- <numericParameter id="0" name="test" range="-100..100" />	    -->
-	   <!-- <stringParameter id="0" name="notification" readOnly="false"></stringParameter> -->
-	   
-	   <setParameter id="0" name="timelineEventData">
+	   	   <setParameter id="0" name="timelineEventData">
 			<parameters>
 				<stringParameter id = "1" name= "type" readOnly= "true"/>
 				<numericParameter id = "2" name= "id" range= "0..999"/>
@@ -19,63 +15,7 @@
 				<numericParameter id = "025" name= "waypointLongitude" range= "0..1000" readOnly= "false"/> -->																
 		 	</parameters>		 	
 		</setParameter>
-		
-		<!-- TODO:JUST FOR TESTING ACCEPT. REMOVE ONCE WE HAVE REAL ACCEPT/DECLINE -->
-	    <!-- <numericParameter id="1" name="accept" range="-100..100" /> -->
-	    
-	    <!-- <numericParameter id="2" name="test" range="-100..100" /> -->
-	    
-	    <!-- <setParameter id="2" name="timelineEvent" readOnly="false">
-			<parameters>
-				<stringParameter id = "1" name= "type" readOnly= "false"/>
-				<numericParameter id = "2" name= "id" range= "0..999"/>
-				<stringParameter id = "3" name= "name" readOnly= "false"/>
-				<stringParameter id = "4" name= "address" readOnly= "false"/>				
-				<stringParameter id = "5" name= "image" readOnly= "false"/>
-				<stateParameter id = "6" name= "state" readOnly= "false">
-					<states>
-						<states>Anfahren</states>
-						<states>Löschen</states>
-						<states>Warten</states>
-					</states>
-				</stateParameter>				
-		 	</parameters>		 	
-		</setParameter> -->
-		
-		<!-- <setParameter id="1" name="accept">
-			<parameters>
-				<stringParameter id = "1" name= "type" readOnly= "true"/>
-				<numericParameter id = "2" name= "id" range= "0..100000"/>
-				<stringParameter id = "3" name= "name" readOnly= "true"/>
-				<stringParameter id = "4" name= "address" readOnly= "true"/>				
-				<stringParameter id = "5" name= "image" readOnly= "true"/>
-				<stateParameter id = "6" name= "state" readOnly= "true">
-					<states>
-						<states>Anfahren</states>
-						<states>Löschen</states>
-						<states>Warten</states>
-					</states>
-				</stateParameter>								
-		 	</parameters>		 	
-		</setParameter>
-		
-		<setParameter id="3" name="decline">
-			<parameters>
-				<stringParameter id = "1" name= "type" readOnly= "true"/>
-				<numericParameter id = "2" name= "id" range= "0..100000"/>
-				<stringParameter id = "3" name= "name" readOnly= "true"/>
-				<stringParameter id = "4" name= "address" readOnly= "true"/>				
-				<stringParameter id = "5" name= "image" readOnly= "true"/>				
-				<stateParameter id = "6" name= "state" readOnly= "true">
-					<states>
-						<states>Anfahren</states>
-						<states>Löschen</states>
-						<states>Warten</states>
-					</states>
-				</stateParameter>
-		 	</parameters>		 	
-		</setParameter> -->
-	    
+		    
 	    <setParameter id="4" name="newWaypoint" readOnly="false">
 			<parameters>
 				<numericParameter id = "024" name= "waypointLatitude" range= "0..1000" readOnly= "false"/>

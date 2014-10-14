@@ -1,35 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <service path="tummitfahrer" name="tummitfahrer" ranking="10">
 	<parameters>
-	   <!-- Changed by Behroz - we need string parameter instead of numeric parameter -->
-	   <!-- <restNumericParameter path="test" referenceParameter="0" name="test" /> -->
-	   <!-- <restStringParameter path="notification" referenceParameter="0" name="notification"></restStringParameter> -->
-	   
-	   <restSetParameter path="notification" referenceParameter="0" name="timelineEventData" />
-	   <!-- <restSetParameter path="timelineEvent" referenceParameter="2" name="timelineEvent" /> --> <!-- TODO: Remove this once we are live because we donot need this in rest -->
-			
-	   <!-- <restSetParameter path="notification" name="timelineEvent" referenceParameter="2">
-			<parameters>
-				<stringParameter id = "1" name= "type" readOnly= "true"/>
-				<numericParameter id = "2" name= "id" range= "0..100000" readOnly= "true"/>
-				<stringParameter id = "3" name= "name" readOnly= "true"/>
-				<stringParameter id = "4" name= "address" readOnly= "true"/>
-				<stringParameter id = "5" name= "url" readOnly= "true"/>
-				<stringParameter id = "5" name= "image" readOnly= "true"/>
-				<stringParameter id = "7" name= "other" readOnly= "true"/>
-				<stateParameter id = "6" name= "state" readOnly= "true">
-					<states>
-						<states>Accept</states>
-						<states>Decline</states>
-					</states>
-				</stateParameter>								
-		 	</parameters>		 	
-		</restSetParameter> -->
-	   	   
-	   <!-- <restSetParameter path="accept" referenceParameter="1" name="accept" />
-	   <restSetParameter path="decline" referenceParameter="3" name="decline" /> -->
-	   
-	   <!-- <restNumericParameter path="test" referenceParameter="2" name="test" /> -->
+	   <restSetParameter path="notification" referenceParameter="0" name="timelineEventData" />	
 	</parameters>
 </service>
 

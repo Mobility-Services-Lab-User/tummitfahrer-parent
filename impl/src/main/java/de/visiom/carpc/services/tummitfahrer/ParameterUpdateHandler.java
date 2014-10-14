@@ -42,24 +42,6 @@ public class ParameterUpdateHandler extends ValueChangeEventHandler {
     
     @Override
     public void onValueChangeEvent(ValueChangeEvent valueChangeEvent) {
-        /*NumberValueObject numberValueObject = (NumberValueObject) valueChangeEvent
-                .getValue();
-        Parameter parameter = valueChangeEvent.getParameter();
-        Double value = numberValueObject.getValue().doubleValue();
-        LOG.info("Received an update for {}/{}: {}", parameter.getName(), 
-                parameter.getService().getName(), value);*/
-        
-    	
-    	
-        /*StringValueObject stringValueObject = (StringValueObject) valueChangeEvent
-                .getValue();
-        Parameter parameter = valueChangeEvent.getParameter();
-        String value = stringValueObject.getValue();
-        LOG.info("Received an update for {}/{}: {}", parameter.getName(), 
-                parameter.getService().getName(), value);*/
-        
-        //LOG.info("~~URL in store is ~~ {}",UrlStore.getURL(104));
-    	
     	TimelineEventData aTimelineEvent = new TimelineEventData();
     	aTimelineEvent.processValueChange(valueChangeEvent);
     	
@@ -89,26 +71,13 @@ public class ParameterUpdateHandler extends ValueChangeEventHandler {
     		//Ignore the request    		
     		LOG.info("UPDATE HANDLER -> Ignoring ID");
     	}
-    	
-    	
-    	/*SetValueObject setValueObject = (SetValueObject) valueChangeEvent.getValue();
-        Parameter parameter = valueChangeEvent.getParameter();
-        Map<Parameter, ValueObject> value = setValueObject.getValue();
-        LOG.info("Received an update for a {}/{}: {}", parameter.getName(), 
-                parameter.getService().getName(), value.size());*/
-        
     }
     
     private boolean handleAccept(String type, NotificationData notifData)
 	{
 		HttpRequest putRequest = new HttpRequest();
 		try {			
-/*			// 1- Process the request and get all the values posted by the iPad
-			TimelineEventData data = new TimelineEventData();
-			data.processRequest(request, serviceRegistry, "setAcceptParameterName");
-			
-			NotificationData notifData = UrlStore.getData(data.id);
-*/			
+
 			if (type.equals("Driver Pickup Alert"))
 			{				
 				// Push coordinates to Manual Parameter				
