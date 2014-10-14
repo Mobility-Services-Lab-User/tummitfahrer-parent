@@ -6,6 +6,7 @@
 	   <!-- <restStringParameter path="notification" referenceParameter="0" name="notification"></restStringParameter> -->
 	   
 	   <restSetParameter path="notification" referenceParameter="0" name="timelineEventData" />
+	   <!-- <restSetParameter path="timelineEvent" referenceParameter="2" name="timelineEvent" /> --> <!-- TODO: Remove this once we are live because we donot need this in rest -->
 			
 	   <!-- <restSetParameter path="notification" name="timelineEvent" referenceParameter="2">
 			<parameters>
@@ -25,8 +26,8 @@
 		 	</parameters>		 	
 		</restSetParameter> -->
 	   	   
-	   <restSetParameter path="accept" referenceParameter="1" name="accept" />
-	   <restSetParameter path="decline" referenceParameter="3" name="decline" />
+	   <!-- <restSetParameter path="accept" referenceParameter="1" name="accept" />
+	   <restSetParameter path="decline" referenceParameter="3" name="decline" /> -->
 	   
 	   <!-- <restNumericParameter path="test" referenceParameter="2" name="test" /> -->
 	</parameters>

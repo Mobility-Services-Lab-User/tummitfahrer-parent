@@ -85,7 +85,7 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 		 
 		boolean result = false;
 		
-		if(parameter.getService().getName().equals(Utilities.readConfigFile("acceptParameterServiceName"))
+		/*if(parameter.getService().getName().equals(Utilities.readConfigFile("acceptParameterServiceName"))
 						&& parameter.getName().equals(Utilities.readConfigFile("setAcceptParameterName")))			
 		{			
 			result = handleAccept(request);
@@ -99,7 +99,8 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 		{	
 			//result = publishStringParameterChangeEvent(request);
 			result = publishSetParameterChangeEvent(request);
-		}
+		}*/
+		result = publishSetParameterChangeEvent(request);
 		
 		int responseStatus = getResponseStatus(result);
 		
@@ -110,98 +111,7 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
                 .getParameter().getService());   
 	}
 	
-	private boolean handleAccept(ValueChangeRequest request)
-	{
-		HttpRequest putRequest = new HttpRequest();
-		try {			
-			// 1- Process the request and get all the values posted by the iPad
-			TimelineEventData data = new TimelineEventData();
-			data.processRequest(request, serviceRegistry, "setAcceptParameterName");
-			
-			NotificationData notifData = UrlStore.getData(data.id);
-			
-			if (data.type.equals("Driver Pickup Alert"))
-			{				
-				// Push coordinates to Manual Parameter				
-				
-				// 1- Get Navigation service and parameters
-				Service navigationService = serviceRegistry.getService(Utilities.readConfigFile("navigationServiceName"));		
-				SetParameter navigationParams = (SetParameter) navigationService.getParameter(Utilities.readConfigFile("navigationSetParameterName"));
-				
-				Parameter latParam = navigationParams.getParameter("waypointLatitude");
-				Parameter longParam = navigationParams.getParameter("waypointLongitude");
-				Parameter typeParam = navigationParams.getParameter("waypointType");	
-				
-				// 2- Create a set parameter with the new values
-				Map<Parameter, ValueObject> updates = new HashMap<Parameter, ValueObject>();
-				updates.put(latParam, NumberValueObject.valueOf(notifData.lattitude));
-				updates.put(longParam, NumberValueObject.valueOf(notifData.longitude));
-				updates.put(typeParam, StringValueObject.valueOf("TUMitfahrer"));
-				
-				//Publish the result to bus
-				ValueObject valueObject = SetValueObject.valueOf(updates);
-				
-		        ValueChangeEvent valueChangeEvent = ValueChangeEvent
-		                .createValueChangeEvent(navigationParams, valueObject);
-		        eventPublisher.publishValueChange(valueChangeEvent);
-		        
-		        LOG.info("Driver Pickup Alert pused to bus for navigation service.");
-				
-			}
-			else if (data.type.equals("User Join Request"))
-			{
-				// Get the call back URL
-				// Do a PUT request				
-				//TODO: Parse the request to get the ID, Parse the ID to get your own ID i.e 04. Post response.
-				//String response = putRequest.sendPUTRequest("http://localhost:3000/api/v2/rides/67/requests/18?passenger_id=2", "1"); //TODO: 1 = dummy value remove it
-				//LOG.info("Response successfully sent:" + response);
-				
-				String response = putRequest.sendPUTRequest(notifData.callbackURL, "1"); //TODO: 1 = dummy value remove it
-				LOG.info("Accept -> Response successfully sent:" + response);				
-			}
-			
-			
-			LOG.info("Accept handled");
-		} catch (Exception e) {				
-			LOG.info("Error occured while sending the PUT request", e);
-			return false;
-		}
-		
-		//LOG.info("Publishing accept parameter");
-		//return publishNumericParameterChangeEvent(request);	
-		return true;
-	}
 	
-	private boolean handleDecline(ValueChangeRequest request)
-	{
-		HttpRequest putRequest = new HttpRequest();
-		try {
-			// 1- Process the request and get all the values posted by the iPad
-			TimelineEventData data = new TimelineEventData();
-			data.processRequest(request, serviceRegistry, "setDeclineParameterName");
-			
-			NotificationData notifData = UrlStore.getData(data.id);
-			
-			if (data.type.equals("Driver Pickup Alert"))
-			{	
-				// Do nothing
-			}
-			else if (data.type.equals("User Join Request"))
-			{
-				// Get the call back URL
-				// Do a PUT request			
-				String response = putRequest.sendPUTRequest(notifData.callbackURL, "1"); //TODO: 1 = dummy value remove it
-				LOG.info("Decline -> Response successfully sent:" + response);	
-			}
-			
-			LOG.info("Response successfully sent: DECLINE");
-		} catch (Exception e) {				
-			LOG.info("Error occured while sending the PUT request", e);
-			return false;
-		}
-		
-		return true;
-	}	
 	
 	
 	
@@ -225,12 +135,14 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 	private boolean publishSetParameterChangeEvent(ValueChangeRequest request)	
 	{	
 		Service tummitfahrerService;
+		Service recommenderService;
 		try {			
-			tummitfahrerService = serviceRegistry.getService(Utilities.readConfigFile("setParameterServiceName"));
+			recommenderService = serviceRegistry.getService(Utilities.readConfigFile("setParameterServiceName"));
+			tummitfahrerService = serviceRegistry.getService(Utilities.readConfigFile("notificationSetParameterServiceName"));
 		
 			timelineDataSetParamter = (SetParameter) tummitfahrerService.getParameter(Utilities.readConfigFile("timelineDataSetParameterName"));
 			
-			timelineSetParamter = (SetParameter) tummitfahrerService.getParameter(Utilities.readConfigFile("timelineSetParameterName"));
+			timelineSetParamter = (SetParameter) recommenderService.getParameter(Utilities.readConfigFile("timelineSetParameterName"));
 		
 			//Get TIMELINEEVENT parameters
 			Parameter typeParam = timelineSetParamter.getParameter("type");
@@ -238,6 +150,8 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 			Parameter nameParam = timelineSetParamter.getParameter("name");
 			Parameter addressParam = timelineSetParamter.getParameter("address");
 			Parameter imageParam = timelineSetParamter.getParameter("image");
+			Parameter stateParam = timelineSetParamter.getParameter("state");
+			
 			
 			//Get TIMELINEEVENTDATA parameters
 			Parameter typeParamData = timelineDataSetParamter.getParameter("type");
@@ -277,7 +191,7 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 			updates.put(nameParam, nameValueObj);
 			updates.put(addressParam, addressValueObj);
 			updates.put(imageParam, imageValueObj);
-			
+			updates.put(stateParam, StateValueObject.valueOf("Warten"));
 			
 			//Publish the result to bus
 			ValueObject valueObject = SetValueObject.valueOf(updates);

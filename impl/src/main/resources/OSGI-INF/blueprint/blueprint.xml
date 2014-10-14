@@ -44,16 +44,19 @@
 	</bean>
 	
 	<!-- Changed by Behroz- Changed the name of the handler from testUpdateHandler to notificationUpdateHandler -->
-    <bean id="notificationUpdateHandler" class="de.visiom.carpc.services.tummitfahrer.ParameterUpdateHandler" />
+    <!-- <bean id="notificationUpdateHandler" class="de.visiom.carpc.services.tummitfahrer.ParameterUpdateHandler" /> -->
+	<bean id="notificationUpdateHandler" class="de.visiom.carpc.services.tummitfahrer.ParameterUpdateHandler" >
+		<property name="eventPublisher" ref="eventPublisher" />
+		<property name="serviceRegistry" ref="serviceRegistry" />
+	</bean>
 
     <service id="updateHandler" interface="org.osgi.service.event.EventHandler"
         ref="notificationUpdateHandler">
         <service-properties>
-            <entry key="event.topics" value="visiom/updates/tummitfahrer" />
-            <!-- Changed by Behroz -->
-            <!-- <entry key="event.filter" value="(parameterName=test)" /> -->
-            <!-- TODO: Change filteration if required -->
-            <entry key="event.filter" value="(parameterName=notification)" />
+            <!-- <entry key="event.topics" value="visiom/updates/tummitfahrer" />            
+            <entry key="event.filter" value="(parameterName=timelineEvent)" /> -->
+            <entry key="event.topics" value="visiom/updates/recommender" />            
+            <entry key="event.filter" value="(parameterName=timelineEvent)" />
             <!-- <entry key="event.filter" value="(parameterName=timelineEvent)" /> -->            
         </service-properties>
     </service>

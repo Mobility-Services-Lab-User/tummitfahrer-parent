@@ -38,8 +38,8 @@ public class ParameterUpdatePublisher extends ParallelWorker {
     //private NumericParameter testParameter;
 	//private StringParameter notificationParamter;
 	private SetParameter notificationParamter;
-	private SetParameter acceptParamter;
-	private SetParameter declineParamter;
+	private SetParameter timelineEventParamter;
+	//private SetParameter declineParamter;*/
 
     private EventPublisher eventPublisher;
 
@@ -67,14 +67,15 @@ public class ParameterUpdatePublisher extends ParallelWorker {
             NoSuchServiceException, UninitalizedValueException {
     	setMaximumNumberOfExecutions(0);
         //Service tummitfahrerService = serviceRegistry.getService("tummitfahrer");
-    	Service tummitfahrerService = serviceRegistry.getService(Utilities.readConfigFile("setParameterServiceName"));
+    	Service tummitfahrerService = serviceRegistry.getService(Utilities.readConfigFile("notificationSetParameterServiceName"));
+    	Service recommenderService = serviceRegistry.getService(Utilities.readConfigFile("setParameterServiceName"));
         
         /*Changed by Behroz - Changed the name of the parameter from test to notification*/
         //testParameter = (NumericParameter) tummitfahrerService.getParameter("test");
         //notificationParamter = (StringParameter) tummitfahrerService.getParameter("notification");
         notificationParamter = (SetParameter) tummitfahrerService.getParameter(Utilities.readConfigFile("timelineDataSetParameterName"));
-        acceptParamter = (SetParameter) tummitfahrerService.getParameter(Utilities.readConfigFile("setAcceptParameterName"));
-        declineParamter = (SetParameter) tummitfahrerService.getParameter(Utilities.readConfigFile("setDeclineParameterName"));
+        timelineEventParamter = (SetParameter) recommenderService.getParameter("timelineEvent");
+        //declineParamter = (SetParameter) tummitfahrerService.getParameter(Utilities.readConfigFile("setDeclineParameterName"));*/
         
         /*NumericParameter numberParamter = (NumericParameter) tummitfahrerService.getParameter("test");
         LOG.info("\nNumber Parameter => {}",numberParamter.getName());*/
@@ -147,8 +148,8 @@ public class ParameterUpdatePublisher extends ParallelWorker {
 			
 			
 			//TODO: Remove them once we have integrated everything
-			initializeParameters(acceptParamter);
-			initializeParameters(declineParamter);
+			initializeParameters(timelineEventParamter);
+			/*initializeParameters(declineParamter);*/
     	/*} 
     	catch (UninitalizedValueException e) {
     		e.printStackTrace();
@@ -164,6 +165,7 @@ public class ParameterUpdatePublisher extends ParallelWorker {
 		Parameter param2 = parameters.get(2);
 		Parameter param3 = parameters.get(3);
 		Parameter param4 = parameters.get(4);
+		Parameter param5 = parameters.get(5);
 		
 		
 		newValues.put(param0, StringValueObject.valueOf(""));
@@ -171,6 +173,7 @@ public class ParameterUpdatePublisher extends ParallelWorker {
 		newValues.put(param2, StringValueObject.valueOf(""));
 		newValues.put(param3, StringValueObject.valueOf(""));
 		newValues.put(param4, StringValueObject.valueOf(""));
+		newValues.put(param5, StateValueObject.valueOf(""));
 		
 		ValueObject newValueObject = SetValueObject.valueOf(newValues);
 		ValueChangeEvent valueChangeEvent = ValueChangeEvent

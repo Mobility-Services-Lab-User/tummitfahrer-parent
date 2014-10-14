@@ -8,7 +8,7 @@
 	   <setParameter id="0" name="timelineEventData">
 			<parameters>
 				<stringParameter id = "1" name= "type" readOnly= "true"/>
-				<numericParameter id = "2" name= "id" range= "0..100000"/>
+				<numericParameter id = "2" name= "id" range= "0..999"/>
 				<stringParameter id = "3" name= "name" readOnly= "true"/>
 				<stringParameter id = "4" name= "address" readOnly= "true"/>				
 				<stringParameter id = "5" name= "image" readOnly= "true"/>
@@ -25,39 +25,37 @@
 	    
 	    <!-- <numericParameter id="2" name="test" range="-100..100" /> -->
 	    
-	    <setParameter id="2" name="timelineEvent">
+	    <!-- <setParameter id="2" name="timelineEvent" readOnly="false">
 			<parameters>
-				<stringParameter id = "1" name= "type" readOnly= "true"/>
-				<numericParameter id = "2" name= "id" range= "0..100000"/>
-				<stringParameter id = "3" name= "name" readOnly= "true"/>
-				<stringParameter id = "4" name= "address" readOnly= "true"/>
-				<!-- <stringParameter id = "5" name= "url" readOnly= "true"/> -->
-				<stringParameter id = "5" name= "image" readOnly= "true"/>
-				<!-- <stringParameter id = "7" name= "other" readOnly= "true"/> -->
-				<!-- <stateParameter id = "6" name= "state" readOnly= "true">
+				<stringParameter id = "1" name= "type" readOnly= "false"/>
+				<numericParameter id = "2" name= "id" range= "0..999"/>
+				<stringParameter id = "3" name= "name" readOnly= "false"/>
+				<stringParameter id = "4" name= "address" readOnly= "false"/>				
+				<stringParameter id = "5" name= "image" readOnly= "false"/>
+				<stateParameter id = "6" name= "state" readOnly= "false">
 					<states>
-						<state>Accept</state>
-						<state>Decline</state>
+						<states>Anfahren</states>
+						<states>Löschen</states>
+						<states>Warten</states>
 					</states>
-				</stateParameter> -->								
+				</stateParameter>				
 		 	</parameters>		 	
-		</setParameter>
+		</setParameter> -->
 		
-		<setParameter id="1" name="accept">
+		<!-- <setParameter id="1" name="accept">
 			<parameters>
 				<stringParameter id = "1" name= "type" readOnly= "true"/>
 				<numericParameter id = "2" name= "id" range= "0..100000"/>
 				<stringParameter id = "3" name= "name" readOnly= "true"/>
-				<stringParameter id = "4" name= "address" readOnly= "true"/>
-				<!-- <stringParameter id = "5" name= "url" readOnly= "true"/> -->
+				<stringParameter id = "4" name= "address" readOnly= "true"/>				
 				<stringParameter id = "5" name= "image" readOnly= "true"/>
-				<!-- <stringParameter id = "7" name= "other" readOnly= "true"/> -->
-				<!-- <stateParameter id = "6" name= "state" readOnly= "true">
+				<stateParameter id = "6" name= "state" readOnly= "true">
 					<states>
-						<state>Accept</state>
-						<state>Decline</state>
+						<states>Anfahren</states>
+						<states>Löschen</states>
+						<states>Warten</states>
 					</states>
-				</stateParameter> -->								
+				</stateParameter>								
 		 	</parameters>		 	
 		</setParameter>
 		
@@ -66,18 +64,17 @@
 				<stringParameter id = "1" name= "type" readOnly= "true"/>
 				<numericParameter id = "2" name= "id" range= "0..100000"/>
 				<stringParameter id = "3" name= "name" readOnly= "true"/>
-				<stringParameter id = "4" name= "address" readOnly= "true"/>
-				<!-- <stringParameter id = "5" name= "url" readOnly= "true"/> -->
-				<stringParameter id = "5" name= "image" readOnly= "true"/>
-				<!-- <stringParameter id = "7" name= "other" readOnly= "true"/> -->
-				<!-- <stateParameter id = "6" name= "state" readOnly= "true">
+				<stringParameter id = "4" name= "address" readOnly= "true"/>				
+				<stringParameter id = "5" name= "image" readOnly= "true"/>				
+				<stateParameter id = "6" name= "state" readOnly= "true">
 					<states>
-						<state>Accept</state>
-						<state>Decline</state>
+						<states>Anfahren</states>
+						<states>Löschen</states>
+						<states>Warten</states>
 					</states>
-				</stateParameter> -->								
+				</stateParameter>
 		 	</parameters>		 	
-		</setParameter>
+		</setParameter> -->
 	    
 	    <setParameter id="4" name="newWaypoint" readOnly="false">
 			<parameters>
