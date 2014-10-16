@@ -46,10 +46,10 @@
     <service id="updateHandler" interface="org.osgi.service.event.EventHandler"
         ref="notificationUpdateHandler">
         <service-properties>
-            <!-- <entry key="event.topics" value="visiom/updates/tummitfahrer" />            
-            <entry key="event.filter" value="(parameterName=timelineEvent)" /> -->
-            <entry key="event.topics" value="visiom/updates/recommender" />            
+            <entry key="event.topics" value="visiom/updates/tummitfahrer" />            
             <entry key="event.filter" value="(parameterName=timelineEvent)" />
+            <!-- <entry key="event.topics" value="visiom/updates/recommender" />            
+            <entry key="event.filter" value="(parameterName=timelineEvent)" /> -->
             <!-- <entry key="event.filter" value="(parameterName=timelineEvent)" /> -->            
         </service-properties>
     </service>

@@ -50,9 +50,11 @@ public class ParameterUpdateHandler extends ValueChangeEventHandler {
     	if( notifData != null )
     	{
     		// Check the name and process the request
-    		LOG.info("UPDATE HANDLER -> ID matched");
+    		LOG.info("In Update Handler -> ID matched => {}", aTimelineEvent.id);
     		
+    		//TODO: Revert the check
     		if(aTimelineEvent.state.equals("Anfahren"))
+    		//if(aTimelineEvent.state.equals("Warten"))
     		{
     			handleAccept(aTimelineEvent.type, notifData);    			
     		}
@@ -69,7 +71,7 @@ public class ParameterUpdateHandler extends ValueChangeEventHandler {
     	else
     	{
     		//Ignore the request    		
-    		LOG.info("UPDATE HANDLER -> Ignoring ID");
+    		LOG.info("In Update Handler -> ID not found in URL store");
     	}
     }
     
@@ -94,7 +96,7 @@ public class ParameterUpdateHandler extends ValueChangeEventHandler {
 				Map<Parameter, ValueObject> updates = new HashMap<Parameter, ValueObject>();
 				updates.put(latParam, NumberValueObject.valueOf(notifData.lattitude));
 				updates.put(longParam, NumberValueObject.valueOf(notifData.longitude));
-				updates.put(typeParam, StringValueObject.valueOf("TUMitfahrer"));
+				updates.put(typeParam, StringValueObject.valueOf(Utilities.readConfigFile("bundleName")));
 				
 				//Publish the result to bus
 				ValueObject valueObject = SetValueObject.valueOf(updates);

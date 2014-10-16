@@ -10,12 +10,28 @@
 				<stringParameter id = "5" name= "image" readOnly= "true"/>
 				<stringParameter id = "6" name= "url" readOnly= "true"/>
 				<stringParameter id = "7" name= "latt" readOnly= "true"/>
-				<stringParameter id = "8" name= "long" readOnly= "true"/>
-				<!-- <numericParameter id = "024" name= "waypointLatitude" range= "0..1000" readOnly= "false"/>
-				<numericParameter id = "025" name= "waypointLongitude" range= "0..1000" readOnly= "false"/> -->																
+				<stringParameter id = "8" name= "long" readOnly= "true"/>																			
 		 	</parameters>		 	
 		</setParameter>
-		    
+		
+		<!-- TODO: Remove this once recommender service is up and running -->
+		<setParameter id="1" name="timelineEvent" readOnly="false">
+			<parameters>
+				<stringParameter id = "1" name= "type" readOnly= "false"/>
+				<numericParameter id = "2" name= "id" range= "0..100000" readOnly= "false"/>
+				<stringParameter id = "3" name= "name" readOnly= "false"/>
+				<stringParameter id = "4" name= "address" readOnly= "false"/>
+				<stringParameter id = "5" name= "image" readOnly= "false"/>
+				<stateParameter id = "6" name= "state" readOnly= "false">
+					<states>
+						<state>Anfahren</state>
+						<state>Löschen</state>
+						<state>Warten</state>
+					</states>
+				</stateParameter>
+		 	</parameters>
+		</setParameter>
+		
 	    <setParameter id="4" name="newWaypoint" readOnly="false">
 			<parameters>
 				<numericParameter id = "024" name= "waypointLatitude" range= "0..1000" readOnly= "false"/>

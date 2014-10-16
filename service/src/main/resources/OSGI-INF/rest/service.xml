@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <service path="tummitfahrer" name="tummitfahrer" ranking="10">
 	<parameters>
-	   <restSetParameter path="notification" referenceParameter="0" name="timelineEventData" />	
+	   <restSetParameter path="notification" referenceParameter="0" name="timelineEventData" />
+	   <!-- TODO: Remove this once recommender service is up and ruuunig -->	
+	   <restSetParameter path="timelineEvent" referenceParameter="1" name="timelineEvent" />	
 	</parameters>
 </service>
 
