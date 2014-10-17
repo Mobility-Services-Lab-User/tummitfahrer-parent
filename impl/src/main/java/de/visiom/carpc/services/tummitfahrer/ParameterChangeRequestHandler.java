@@ -68,20 +68,28 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 		LOG.info("TUMitfahrer => Service Name => {} ",parameter.getService().getName());
 		LOG.info("TUMitfahrer => Service Parameter => {}" ,parameter.getName());
 		
+		LOG.info("TUMitfahrer => Utility => {} ", Utilities.readConfigFile("setParameterServiceName") + "|");
+		LOG.info("TUMitfahrer => Utility => {} ", Utilities.readConfigFile("timelineSetParameterName") + "|");
 		
 		if(parameter.getService().getName().equals(Utilities.readConfigFile("setParameterServiceName"))
-				&& parameter.getName().equals(Utilities.readConfigFile("setAcceptParameterName"))) 	
+				&& parameter.getName().equals(Utilities.readConfigFile("timelineSetParameterName"))) 	
 		 { 	
+			LOG.info("===>INSIDE<===");
+			
 			// Parse the timelineEvent data
 			TimelineEventData aTimelineEvent = new TimelineEventData();
 	    	aTimelineEvent.processRequest(request, serviceRegistry, Utilities.readConfigFile("timelineSetParameterName") );
+	    	
+	    	LOG.info("==>HERE<== ID => {}");
 	    	
 	    	NotificationData notifData = UrlStore.getData(aTimelineEvent.id);
 	    	
 	    	if( notifData != null )
 	    	{
+	    		LOG.info("==>HERE1<==");
+	    		
 	    		// Check the name and process the request
-	    		LOG.info("In Update Handler -> ID matched => {}", aTimelineEvent.id);
+	    		LOG.info("In Update Handler -> ID matched => {}  STATE =>{}", aTimelineEvent.id, aTimelineEvent.state);
 	    		
 	    		if(aTimelineEvent.state.equals("Anfahren"))
 	    		//if(aTimelineEvent.state.equals("Warten"))

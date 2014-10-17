@@ -15,7 +15,7 @@
 		</setParameter>
 		
 		<!-- TODO: Remove this once recommender service is up and running -->
-		<setParameter id="1" name="timelineEvent" readOnly="false">
+		<!-- <setParameter id="1" name="timelineEvent" readOnly="false">
 			<parameters>
 				<stringParameter id = "1" name= "type" readOnly= "false"/>
 				<numericParameter id = "2" name= "id" range= "0..100000" readOnly= "false"/>
@@ -30,15 +30,15 @@
 					</states>
 				</stateParameter>
 		 	</parameters>
-		</setParameter>
+		</setParameter> -->
 		
-	    <setParameter id="4" name="newWaypoint" readOnly="false">
+	    <!-- <setParameter id="4" name="newWaypoint" readOnly="false">
 			<parameters>
 				<numericParameter id = "024" name= "waypointLatitude" range= "0..1000" readOnly= "false"/>
 				<numericParameter id = "025" name= "waypointLongitude" range= "0..1000" readOnly= "false"/>
 				<stringParameter id = "026" name= "waypointType" readOnly= "false"/>
 			</parameters>
-		</setParameter>
+		</setParameter> -->
 	</parameters>
 	
 	

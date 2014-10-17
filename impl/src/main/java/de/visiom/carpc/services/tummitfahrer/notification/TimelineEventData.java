@@ -47,9 +47,11 @@ public class TimelineEventData {
 		try {			
 			
 			// 1 - Fetch Service and Parameter
-			service = serviceRegistry.getService(Utilities.readConfigFile("setParameterServiceName"));		
-			params = (SetParameter) service.getParameter(Utilities.readConfigFile(parameterName));
-		
+			//service = serviceRegistry.getService(Utilities.readConfigFile("setParameterServiceName"));		
+			//params = (SetParameter) service.getParameter(Utilities.readConfigFile(parameterName));
+			
+			params = (SetParameter) request.getParameter();
+			
 			SetValueObject receivedRequest = (SetValueObject)request.getValue();
 			Map<Parameter, ValueObject> requestValue = receivedRequest.getValue();
 			
@@ -59,6 +61,7 @@ public class TimelineEventData {
 			Parameter nameParam = params.getParameter("name");
 			Parameter addressParam = params.getParameter("address");
 			Parameter imageParam = params.getParameter("image");
+			Parameter stateParam = params.getParameter("state");
 			
 			//3 - Fetch Data
 			StringValueObject typeValueObj = (StringValueObject) requestValue.get(typeParam);
@@ -66,21 +69,30 @@ public class TimelineEventData {
 			StringValueObject nameValueObj = (StringValueObject) requestValue.get(nameParam);
 			StringValueObject addressValueObj = (StringValueObject) requestValue.get(addressParam);
 			StringValueObject imageValueObj = (StringValueObject) requestValue.get(imageParam);
+			StateValueObject stateValueObj = (StateValueObject) requestValue.get(stateParam);
 			
 			this.type = typeValueObj.getValue();
-			this.id = (Integer) idValueObj.getValue();
+			this.id = Integer.parseInt(idValueObj.getValue().toString());
 			this.name =  nameValueObj.getValue();
 			this.address =  addressValueObj.getValue();
 			this.image = imageValueObj.getValue();					
+			this.state = stateValueObj.getValue();
 			
+			
+			
+			LOG.info("==>TIMELINE<==");
 		}
-		catch (NoSuchServiceException e) {			
+		/*catch (NoSuchServiceException e) {			
 			LOG.info("Unable to find the service!", e);
 			//return false;
-		}
+		}*/
 		catch(NoSuchParameterException e)
 		{
 			LOG.info("Unable to find the parameter!", e);					
+		}
+		catch(Exception e)
+		{
+			LOG.info("TUMITFAHRER => EXCEPTION => {}", e);
 		}
 		return this;
 	}

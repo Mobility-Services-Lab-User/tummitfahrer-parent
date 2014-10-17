@@ -26,7 +26,7 @@
 		ref="commandListener">
 		<service-properties>
 			<entry key="event.topics" value="visiom/commands/requests" />
-			<entry key="event.filter" value="(|(serviceName=can)(serviceName=tummitfahrer))" />
+			<entry key="event.filter" value="(|(serviceName=recommender)(serviceName=tummitfahrer))" />
 		</service-properties>
 	</service>
 	

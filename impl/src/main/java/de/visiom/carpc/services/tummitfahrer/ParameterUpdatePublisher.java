@@ -61,10 +61,10 @@ public class ParameterUpdatePublisher extends ParallelWorker {
     	setMaximumNumberOfExecutions(0);
         
     	Service tummitfahrerService = serviceRegistry.getService(Utilities.readConfigFile("notificationSetParameterServiceName"));
-    	Service recommenderService = serviceRegistry.getService(Utilities.readConfigFile("setParameterServiceName"));
-        
-        notificationParamter = (SetParameter) tummitfahrerService.getParameter(Utilities.readConfigFile("timelineDataSetParameterName"));
-        timelineEventParamter = (SetParameter) recommenderService.getParameter("timelineEvent");        
+    	notificationParamter = (SetParameter) tummitfahrerService.getParameter(Utilities.readConfigFile("timelineDataSetParameterName"));
+    	
+    	//Service recommenderService = serviceRegistry.getService(Utilities.readConfigFile("setParameterServiceName"));
+        //timelineEventParamter = (SetParameter) recommenderService.getParameter("timelineEvent");        
     }
 
     @Override
@@ -113,7 +113,7 @@ public class ParameterUpdatePublisher extends ParallelWorker {
 		
 			
 		//TODO: Remove them once we have integrated everything
-		initializeParameters(timelineEventParamter);
+		//initializeParameters(timelineEventParamter);
 			
     }
     

@@ -3,7 +3,7 @@
 	<parameters>
 	   <restSetParameter path="notification" referenceParameter="0" name="timelineEventData" />
 	   <!-- TODO: Remove this once recommender service is up and ruuunig -->	
-	   <restSetParameter path="timelineEvent" referenceParameter="1" name="timelineEvent" />	
+	   <!-- <restSetParameter path="timelineEvent" referenceParameter="1" name="timelineEvent" /> -->	
 	</parameters>
 </service>
 
