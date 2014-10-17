@@ -93,15 +93,16 @@ public class ParameterUpdatePublisher extends ParallelWorker {
 		/*Parameter param5 = parameters.get(5);*/
 		
 		//LOG.info("\n Parameter Size: => {}", parameters.size());/
+		LOG.info("Initializing the paramters");
 		
-		newValues.put(param0, StringValueObject.valueOf("Driver Pickup Alert"));
-		newValues.put(param1, NumberValueObject.valueOf(5));
-		newValues.put(param2, StringValueObject.valueOf("Name"));
-		newValues.put(param3, StringValueObject.valueOf("Address"));
-		newValues.put(param4, StringValueObject.valueOf("Image URL"));
-		newValues.put(param5, StringValueObject.valueOf("callback URL"));
-		newValues.put(param6, StringValueObject.valueOf("latt"));
-		newValues.put(param7, StringValueObject.valueOf("long"));
+		newValues.put(param0, StringValueObject.valueOf(""));
+		newValues.put(param1, NumberValueObject.valueOf(0));
+		newValues.put(param2, StringValueObject.valueOf(""));
+		newValues.put(param3, StringValueObject.valueOf(""));
+		newValues.put(param4, StringValueObject.valueOf(""));
+		newValues.put(param5, StringValueObject.valueOf(""));
+		newValues.put(param6, StringValueObject.valueOf(""));
+		newValues.put(param7, StringValueObject.valueOf(""));
 		/*newValues.put(param5, StateValueObject.valueOf("State"));*/
 				
 		

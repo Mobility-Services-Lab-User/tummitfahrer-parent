@@ -42,10 +42,14 @@ public class ParameterUpdateHandler extends ValueChangeEventHandler {
     
     @Override
     public void onValueChangeEvent(ValueChangeEvent valueChangeEvent) {
+    	
+    	/*
     	TimelineEventData aTimelineEvent = new TimelineEventData();
     	aTimelineEvent.processValueChange(valueChangeEvent);
     	
     	NotificationData notifData = UrlStore.getData(aTimelineEvent.id);
+    	
+    	LOG.info("IN UPDATE HANDLER ===> id => {}", aTimelineEvent.id.toString());
     	
     	if( notifData != null )
     	{
@@ -56,11 +60,13 @@ public class ParameterUpdateHandler extends ValueChangeEventHandler {
     		if(aTimelineEvent.state.equals("Anfahren"))
     		//if(aTimelineEvent.state.equals("Warten"))
     		{
-    			handleAccept(aTimelineEvent.type, notifData);    			
+    			handleAccept(aTimelineEvent.type, notifData);
+    			UrlStore.removeData(aTimelineEvent.id);
     		}
     		else if(aTimelineEvent.state.equals("Löschen"))
     		{
     			handleDecline(aTimelineEvent.type, notifData);
+    			UrlStore.removeData(aTimelineEvent.id);
     		}
     		else
     		{	
@@ -72,9 +78,10 @@ public class ParameterUpdateHandler extends ValueChangeEventHandler {
     	{
     		//Ignore the request    		
     		LOG.info("In Update Handler -> ID not found in URL store");
-    	}
+    	}*/
     }
     
+    /*
     private boolean handleAccept(String type, NotificationData notifData)
 	{
 		HttpRequest putRequest = new HttpRequest();
@@ -131,16 +138,13 @@ public class ParameterUpdateHandler extends ValueChangeEventHandler {
 		//return publishNumericParameterChangeEvent(request);	
 		return true;
 	}
+	*/
 	
+    /*
 	private boolean handleDecline(String type, NotificationData notifData)
 	{
 		HttpRequest putRequest = new HttpRequest();
 		try {
-			// 1- Process the request and get all the values posted by the iPad
-			/*TimelineEventData data = new TimelineEventData();
-			data.processRequest(request, serviceRegistry, "setDeclineParameterName");
-			
-			NotificationData notifData = UrlStore.getData(data.id);*/
 			
 			if (type.equals("Driver Pickup Alert"))
 			{	
@@ -161,5 +165,5 @@ public class ParameterUpdateHandler extends ValueChangeEventHandler {
 		}
 		
 		return true;
-	}	
+	}*/	
 }

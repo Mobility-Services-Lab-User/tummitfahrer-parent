@@ -41,6 +41,12 @@ public class UrlStore {
 		return urlStoreHashMap.get(key);				
 	}
 	
+	public static void removeData(int key)
+	{
+		urlStoreHashMap.remove(key);
+		
+	}
+	
 }
 
 

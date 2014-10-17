@@ -4,7 +4,7 @@
 	   	   <setParameter id="0" name="timelineEventData">
 			<parameters>
 				<stringParameter id = "1" name= "type" readOnly= "true"/>
-				<numericParameter id = "2" name= "id" range= "0..999"/>
+				<numericParameter id = "2" name= "id" range= "0..100000"/>
 				<stringParameter id = "3" name= "name" readOnly= "true"/>
 				<stringParameter id = "4" name= "address" readOnly= "true"/>				
 				<stringParameter id = "5" name= "image" readOnly= "true"/>

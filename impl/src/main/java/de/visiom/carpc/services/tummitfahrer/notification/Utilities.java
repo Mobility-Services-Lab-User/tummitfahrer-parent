@@ -21,8 +21,14 @@ public class Utilities {
 	
 	public static int addServiceNumberToID(int id)
 	{
-		String stringId = readConfigFile("serviceId") + String.valueOf(id);
-		return Integer.parseInt(stringId);		
+		/*String stringId = readConfigFile("serviceId") + String.valueOf(id);
+		return Integer.parseInt(stringId);*/
+		return id % 999;
+	}
+	
+	public static int keyNotificationIdInRange(int id)
+	{	
+		return id % 999;			
 	}
 	
 	public static String getCompleteTUMitfahrerServerURL(String path)
