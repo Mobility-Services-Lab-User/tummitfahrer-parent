@@ -33,7 +33,7 @@ import de.visiom.carpc.services.tummitfahrer.notification.Utilities;
 
 public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 
-	private static final String RECEIVE_LOG_MESSAGE = "Received a value change request for {},{}. Dispatching the request to the ValueStore...";
+	private static final String RECEIVE_LOG_MESSAGE = "TUMitfahrer => Received a value change request for {},{}. Dispatching the request to the ValueStore...";
 	
 	private static final Logger LOG = LoggerFactory
 	            .getLogger(ParameterChangeRequestHandler.class);
@@ -59,66 +59,63 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 	
 	@Override
 	public void onValueChangeRequest(ValueChangeRequest request, Long requestID) {	
+		try
+		{
 		
 		LOG.info(RECEIVE_LOG_MESSAGE, request.getParameter(), request.getValue());
 		Parameter parameter = request.getParameter();
 		
 		boolean result = false;
 		
-		LOG.info("TUMitfahrer => Service Name => {} ",parameter.getService().getName());
+		/*LOG.info("TUMitfahrer => Service Name => {} ",parameter.getService().getName());
 		LOG.info("TUMitfahrer => Service Parameter => {}" ,parameter.getName());
 		
 		LOG.info("TUMitfahrer => Utility => {} ", Utilities.readConfigFile("setParameterServiceName") + "|");
-		LOG.info("TUMitfahrer => Utility => {} ", Utilities.readConfigFile("timelineSetParameterName") + "|");
+		LOG.info("TUMitfahrer => Utility => {} ", Utilities.readConfigFile("timelineSetParameterName") + "|");*/
 		
 		if(parameter.getService().getName().equals(Utilities.readConfigFile("setParameterServiceName"))
 				&& parameter.getName().equals(Utilities.readConfigFile("timelineSetParameterName"))) 	
 		 { 	
-			LOG.info("===>INSIDE<===");
-			
 			// Parse the timelineEvent data
 			TimelineEventData aTimelineEvent = new TimelineEventData();
 	    	aTimelineEvent.processRequest(request, serviceRegistry, Utilities.readConfigFile("timelineSetParameterName") );
-	    	
-	    	LOG.info("==>HERE<== ID => {}");
 	    	
 	    	NotificationData notifData = UrlStore.getData(aTimelineEvent.id);
 	    	
 	    	if( notifData != null )
 	    	{
-	    		LOG.info("==>HERE1<==");
-	    		
 	    		// Check the name and process the request
 	    		LOG.info("In Update Handler -> ID matched => {}  STATE =>{}", aTimelineEvent.id, aTimelineEvent.state);
 	    		
-	    		if(aTimelineEvent.state.equals("Anfahren"))
-	    		//if(aTimelineEvent.state.equals("Warten"))
+	    		if(aTimelineEvent.state.equals("Anfahren"))	    	
 	    		{
+	    			LOG.info("TUMitfahrer => TimelineEvent with Accept received");
 	    			handleAccept(aTimelineEvent.type, notifData);
 	    			UrlStore.removeData(aTimelineEvent.id);
 	    		}
 	    		else if(aTimelineEvent.state.equals("Löschen"))
 	    		{
+	    			LOG.info("TUMitfahrer => TimelineEvent with Decline received");
 	    			handleDecline(aTimelineEvent.type, notifData);
 	    			UrlStore.removeData(aTimelineEvent.id);
 	    		}
 	    		else
 	    		{	
 	    			//LOG here
-	    			LOG.info("Recommender service sent some other state -> {}", aTimelineEvent.state);
+	    			LOG.info("TUMitfahrer => Recommender service sent some other state -> {}", aTimelineEvent.state);
 	    		}
 	    	}
 	    	else
 	    	{
 	    		//Ignore the request    		
-	    		LOG.info("In Update Handler -> ID not found in URL store");
+	    		LOG.info("TUMitfahrer => In Update Handler -> ID not found in URL store");
 	    	}
 	    	
 			//result = handleAccept(request);
 		 }	
 		 else 	
 		 { 	
-			 LOG.info("TUMitfahrer => Publishing Set parameter");
+			 LOG.info("TUMitfahrer => Publishing Set parameter to Recommender Service");
 			 result = publishSetParameterChangeEvent(request);
 		 }
 		
@@ -129,6 +126,11 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 		
 		commandPublisher.publishResponse(response, requestID, request
                 .getParameter().getService());   
+		}
+		catch(Exception e)
+		{
+			LOG.info("TUMitfahrer => Exception -> {}", e);			
+		}
 	}
 	
 	private boolean handleAccept(String type, NotificationData notifData)
@@ -161,7 +163,7 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 		                .createValueChangeEvent(navigationParams, valueObject);
 		        eventPublisher.publishValueChange(valueChangeEvent);
 		        
-		        LOG.info("Driver Pickup Alert pushed to bus for navigation service.");
+		        LOG.info("TUMitfahrer => Driver Pickup Alert pushed to bus for navigation service.");
 				
 			}
 			else if (type.equals("User Join Request"))
@@ -173,13 +175,13 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 				//LOG.info("Response successfully sent:" + response);
 				
 				String response = putRequest.sendPUTRequest(notifData.callbackURL, "1"); //TODO: 1 = dummy value remove it
-				LOG.info("Accept -> Response successfully sent:" + response);				
+				LOG.info("TUMitfahrer => Accept -> Response successfully sent:" + response);				
 			}
 			
 			
-			LOG.info("Accept handled");
+			LOG.info("TUMitfahrer => Accept handled");
 		} catch (Exception e) {				
-			LOG.info("Error occured while sending the PUT request", e);
+			LOG.info("TUMitfahrer => Error occured while sending the PUT request", e);
 			return false;
 		}
 		
@@ -204,10 +206,12 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 			}
 			else if (type.equals("User Join Request"))
 			{
+				String response = "";
 				// Get the call back URL
 				// Do a PUT request			
-				String response = putRequest.sendPUTRequest(notifData.callbackURL, "1"); //TODO: 1 = dummy value remove it
-				LOG.info("Decline -> Response successfully sent:" + response);	
+				response = putRequest.sendDELETERequest(notifData.callbackURL, "1");
+				
+				LOG.info("TUMitfahrer => Decline -> Response successfully sent:" + response);	
 			}
 			
 			LOG.info("Response successfully sent: DECLINE");
@@ -309,12 +313,12 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 	        return true;
         
 		} catch (NoSuchServiceException e) {			
-			LOG.info("Unable to find the service!", e);
+			LOG.info("TUMitfahrer => Unable to find the service!", e);
 			return false;
 		}
 		catch(NoSuchParameterException e)
 		{
-			LOG.info("Unable to find the parameter!", e);
+			LOG.info("TUMitfahrer => Unable to find the parameter!", e);
 			return false;
 		}
 	}

@@ -78,9 +78,7 @@ public class TimelineEventData {
 			this.image = imageValueObj.getValue();					
 			this.state = stateValueObj.getValue();
 			
-			
-			
-			LOG.info("==>TIMELINE<==");
+			//LOG.info("==>TIMELINE<==");
 		}
 		/*catch (NoSuchServiceException e) {			
 			LOG.info("Unable to find the service!", e);
@@ -88,11 +86,11 @@ public class TimelineEventData {
 		}*/
 		catch(NoSuchParameterException e)
 		{
-			LOG.info("Unable to find the parameter!", e);					
+			LOG.info("TUMitfahrer => Unable to find the parameter!", e);					
 		}
 		catch(Exception e)
 		{
-			LOG.info("TUMITFAHRER => EXCEPTION => {}", e);
+			LOG.info("TUMitfahrer => EXCEPTION => {}", e);
 		}
 		return this;
 	}
@@ -137,7 +135,7 @@ public class TimelineEventData {
 		}		
 		catch(NoSuchParameterException e)
 		{
-			LOG.info("Unable to find the parameter!", e);					
+			LOG.info("TUMitfahrer => Unable to find the parameter!", e);					
 		}
 		return this;
 	}

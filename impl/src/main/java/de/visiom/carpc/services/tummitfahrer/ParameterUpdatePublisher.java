@@ -93,7 +93,7 @@ public class ParameterUpdatePublisher extends ParallelWorker {
 		/*Parameter param5 = parameters.get(5);*/
 		
 		//LOG.info("\n Parameter Size: => {}", parameters.size());/
-		LOG.info("Initializing the paramters");
+		LOG.info("TUMitfahrer => Initializing the paramters");
 		
 		newValues.put(param0, StringValueObject.valueOf(""));
 		newValues.put(param1, NumberValueObject.valueOf(0));
