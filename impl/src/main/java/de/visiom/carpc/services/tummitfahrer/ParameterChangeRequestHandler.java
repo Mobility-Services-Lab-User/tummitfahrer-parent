@@ -143,7 +143,7 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 				// Push coordinates to Manual Parameter				
 				
 				// 1- Get Navigation service and parameters
-				Service navigationService = serviceRegistry.getService(Utilities.readConfigFile("navigationServiceName"));		
+				/*Service navigationService = serviceRegistry.getService(Utilities.readConfigFile("navigationServiceName"));		
 				SetParameter navigationParams = (SetParameter) navigationService.getParameter(Utilities.readConfigFile("navigationSetParameterName"));
 				
 				Parameter latParam = navigationParams.getParameter("waypointLatitude");
@@ -163,7 +163,8 @@ public class ParameterChangeRequestHandler extends ValueChangeRequestHandler {
 		                .createValueChangeEvent(navigationParams, valueObject);
 		        eventPublisher.publishValueChange(valueChangeEvent);
 		        
-		        LOG.info("TUMitfahrer => Driver Pickup Alert pushed to bus for navigation service.");
+		        LOG.info("TUMitfahrer => Driver Pickup Alert pushed to bus for navigation service.");*/
+				LOG.info("TUMitfahrer => Driver Pickup Alert received but ignored!");
 				
 			}
 			else if (type.equals("User Join Request"))

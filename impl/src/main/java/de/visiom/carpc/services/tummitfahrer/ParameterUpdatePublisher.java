@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import de.visiom.carpc.asb.messagebus.EventPublisher;
 import de.visiom.carpc.asb.messagebus.async.ParallelWorker;
 import de.visiom.carpc.asb.messagebus.events.ValueChangeEvent;
@@ -62,9 +63,25 @@ public class ParameterUpdatePublisher extends ParallelWorker {
         
     	Service tummitfahrerService = serviceRegistry.getService(Utilities.readConfigFile("notificationSetParameterServiceName"));
     	notificationParamter = (SetParameter) tummitfahrerService.getParameter(Utilities.readConfigFile("timelineDataSetParameterName"));
-    	
+    	 
     	//Service recommenderService = serviceRegistry.getService(Utilities.readConfigFile("setParameterServiceName"));
         //timelineEventParamter = (SetParameter) recommenderService.getParameter("timelineEvent");        
+    	
+    	String url = "http://vmkrcmar60.informatik.tu-muenchen.de/api/v2/visiom_devices";
+    	HttpRequest request = new HttpRequest();
+    	
+    	String result;
+		try {
+			String json = "{ \"ip\": \"http://" + Utilities.getIP() + ":8080/services/tummitfahrer/parameters/notification\"}";
+			LOG.info("TUMitfahrer=> IP =>{}", json);
+			result = request.sendPOSTRequest(url, json);
+			
+			LOG.info("TUMitfahrer => result -> {}", result);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			LOG.info("TUMitfahrer => Changing server IP => {}", e);
+		}
     }
 
     @Override
