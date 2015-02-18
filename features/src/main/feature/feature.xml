@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <features name="tummitfahrer-features" version="${project.version}">
-    <repository>mvn:de.visiom.carpc.services.tummitfahrer/features/${project.version}/xml/features</repository>
+    <repository>mvn:de.visiom.carpc.services.tummitfahrer/features/${project.version}/xml/features</repository>    
     
-    <feature name="tummitfahrer" version="${project.version}">
+    <feature name="tummitfahrer" version="${project.version}">    
         <feature>asb</feature>
         <bundle>mvn:de.visiom.carpc.services.tummitfahrer/service/${project.version}</bundle>
-        <bundle>mvn:de.visiom.carpc.services.tummitfahrer/impl/${project.version}</bundle>
+        <bundle>mvn:de.visiom.carpc.services.tummitfahrer/impl/${project.version}</bundle>        
     </feature>
 
 </features>

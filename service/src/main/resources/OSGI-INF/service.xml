@@ -1,24 +1,55 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <service name="tummitfahrer" description="">
 	<parameters>
+<<<<<<< HEAD
 	   <!-- Changed by Behroz - We need a string parameter instead of numeric parameter -->
 	    <!-- <numericParameter id="0" name="test" range="-100..100" />	    -->
 	   <stringParameter id="0" name="notification" readOnly="false"></stringParameter>
 	   
 	   <setParameter id="2" name="timelineEvent" readOnly="true">
+=======
+	   	   <setParameter id="0" name="timelineEventData">
+>>>>>>> dev
 			<parameters>
 				<stringParameter id = "1" name= "type" readOnly= "true"/>
-				<numericParameter id = "2" name= "id" range= "0..100000" readOnly= "true"/>
+				<numericParameter id = "2" name= "id" range= "0..100000"/>
 				<stringParameter id = "3" name= "name" readOnly= "true"/>
-				<stringParameter id = "4" name= "address" readOnly= "true"/>
-				<stringParameter id = "5" name= "url" readOnly= "true"/>
-				<stringParameter id = "6" name= "image" readOnly= "true"/>
-				<stringParameter id = "7" name= "other" readOnly= "true"/>								
+				<stringParameter id = "4" name= "address" readOnly= "true"/>				
+				<stringParameter id = "5" name= "image" readOnly= "true"/>
+				<stringParameter id = "6" name= "url" readOnly= "true"/>
+				<stringParameter id = "7" name= "latt" readOnly= "true"/>
+				<stringParameter id = "8" name= "long" readOnly= "true"/>																			
 		 	</parameters>		 	
 		</setParameter>
+<<<<<<< HEAD
+=======
 		
-	    <numericParameter id="1" name="accept" range="-100..100" />
-	      
+		<!-- TODO: Remove this once recommender service is up and running -->
+		<!-- <setParameter id="1" name="timelineEvent" readOnly="false">
+			<parameters>
+				<stringParameter id = "1" name= "type" readOnly= "false"/>
+				<numericParameter id = "2" name= "id" range= "0..100000" readOnly= "false"/>
+				<stringParameter id = "3" name= "name" readOnly= "false"/>
+				<stringParameter id = "4" name= "address" readOnly= "false"/>
+				<stringParameter id = "5" name= "image" readOnly= "false"/>
+				<stateParameter id = "6" name= "state" readOnly= "false">
+					<states>
+						<state>Anfahren</state>
+						<state>Löschen</state>
+						<state>Warten</state>
+					</states>
+				</stateParameter>
+		 	</parameters>
+		</setParameter> -->
+>>>>>>> dev
+		
+	    <!-- <setParameter id="4" name="newWaypoint" readOnly="false">
+			<parameters>
+				<numericParameter id = "024" name= "waypointLatitude" range= "0..1000" readOnly= "false"/>
+				<numericParameter id = "025" name= "waypointLongitude" range= "0..1000" readOnly= "false"/>
+				<stringParameter id = "026" name= "waypointType" readOnly= "false"/>
+			</parameters>
+		</setParameter> -->
 	</parameters>
 	
 	
